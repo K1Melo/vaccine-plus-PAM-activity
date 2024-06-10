@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput, View, SafeAreaView, Image, ScrollView, TouchableOpacity, Text } from 'react-native'
 import React from 'react'
 import FooterComponent from '../components/FooterComponent'
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import HeaderComponent from '../components/HeaderComponent'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,10 +9,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 
 const RegisterPet = () => {
+
   const navigation = useNavigation();
 
-  const handleSign = () => {
-    navigation.navigate("Signup");
+  const handleConfirm = () => {
+      navigation.navigate("ConfirmComponent");
   }
 
   return (
@@ -21,14 +22,7 @@ const RegisterPet = () => {
         <View style={styles.topImageContainer}>
           <Image source={require("../assets/vectorTopProfile.png")} style={styles.topImage} />
         </View>
-        <View style={styles.titleBar}>
-          <TouchableOpacity onPress={handleSign}>
-            <EvilIcons name={"arrow-left"} color={"#000000"} size={40} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <FontAwesome6 name={"ellipsis-vertical"} color={"#000000"} size={30} />
-          </TouchableOpacity>
-        </View>
+        <HeaderComponent />
         <View style={{ alignSelf: 'center' }}>
           <View style={styles.profileImage}>
             <Image source={require('../assets/profileImage.jpg')} style={styles.image}></Image>
@@ -54,7 +48,7 @@ const RegisterPet = () => {
           <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Genero" />
         </View>
         <View style={{ alignSelf: 'center' }}>
-          <TouchableOpacity style={styles.btnContainer}>
+          <TouchableOpacity style={styles.btnContainer} onPress={handleConfirm}>
             <Text style={styles.btnText}>Cadastrar Pet</Text>
           </TouchableOpacity>
         </View>
@@ -84,13 +78,6 @@ const styles = StyleSheet.create({
 
   text: {
     color: '#262626',
-  },
-
-  titleBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 24,
-    marginHorizontal: 15,
   },
 
   image: {

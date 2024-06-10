@@ -41,9 +41,6 @@ const LoginScreen = () => {
                 </TouchableOpacity>
             </View>
             <Text style={styles.footerText}>Não tem uma conta? <TouchableOpacity onPress={handleSign}><Text style={{ textDecorationLine: "underline", color: '#23BCEC' }}>Cadastre-se</Text></TouchableOpacity></Text>
-            <View style={styles.bottomImageContainer}>
-                <Image source={require("../assets/vectorBottom.png")} style={styles.bottomImage} />
-            </View>
         </View>
     )
 }
