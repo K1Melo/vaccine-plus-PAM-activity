@@ -1,19 +1,44 @@
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const LoginScreen = () => {
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+
+
     const navigation = useNavigation();
 
     const handleRegister = () => {
         navigation.navigate("RegisterPet");
+        setStringValue(user);
+        setStringValue(password);
     }
     const handleSign = () => {
         navigation.navigate("Signup");
     }
 
-    
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('user');
+            return jsonValue != null ? JSON.parse(jsonValue) : null;
+        } catch (e) {
+            // error reading value
+        }
+    };
+
+    setStringValue = async (value) => {
+        try {
+            await AsyncStorage.setItem('user', value);
+        } catch (e) {
+            // save error
+        }
+
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.topImageContainer}>
@@ -27,11 +52,11 @@ const LoginScreen = () => {
             </View>
             <View style={styles.inputContainer}>
                 <FontAwesome name={"user"} size={24} color={"#9A9A9A"} styles={styles.inputIcon} />
-                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Usuário" />
+                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Usuário" onChangeText={setUser} />
             </View>
             <View style={styles.inputContainer}>
                 <FontAwesome name={"lock"} size={24} color={"#9A9A9A"} styles={styles.inputIcon} />
-                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Senha" secureTextEntry />
+                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Senha" secureTextEntry onChangeText={setPassword} />
             </View>
             <Text style={styles.forgotPassword}>Esqueceu sua senha?</Text>
             <View >
@@ -40,6 +65,10 @@ const LoginScreen = () => {
                     <FontAwesome name={"arrow-right"} size={18} color={"#262626"} styles={styles.inputIcon} />
                 </TouchableOpacity>
             </View>
+            <Text style={styles.team}>Integrantes:</Text>
+            <Text style={styles.team}>- Kauã Fernandes Souza de Melo. N° 23082</Text>
+            <Text style={styles.team}>- Mateus Lima Rodrigues da Silva. N° 23353</Text>
+
             <Text style={styles.footerText}>Não tem uma conta? <TouchableOpacity onPress={handleSign}><Text style={{ textDecorationLine: "underline", color: '#23BCEC' }}>Cadastre-se</Text></TouchableOpacity></Text>
         </View>
     )
@@ -139,5 +168,10 @@ const styles = StyleSheet.create({
 
     bottonImage: {
         width: '100%',
+    },
+
+    team: {
+        color: 'black',
+        marginLeft: 30,
     }
 })
