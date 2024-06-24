@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -7,13 +7,32 @@ import { useNavigation } from '@react-navigation/native';
 
 const SingnupScreen = () => {
     const navigation = useNavigation();
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [tel, setTel] = useState('');
 
     const handleRegister = () => {
         navigation.navigate("RegisterPet");
+        setStringValue(user);
+        setStringValue(password);
+        setStringValue(email);
+        setStringValue(tel);
     }
     const handleLogin = () => {
         navigation.navigate("Login");
     }
+
+    
+    setStringValue = async (value) => {
+        try {
+            await AsyncStorage.setItem('user', value);
+        } catch (e) {
+            // save error
+        }
+
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.topImageContainer}>
@@ -24,19 +43,19 @@ const SingnupScreen = () => {
             </View>
             <View style={styles.inputContainer}>
                 <FontAwesome name={"user"} size={24} color={"#9A9A9A"} styles={styles.inputIcon} />
-                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Usuário" />
+                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Usuário" onChangeText={setUser} />
             </View>
             <View style={styles.inputContainer}>
                 <FontAwesome name={"lock"} size={24} color={"#9A9A9A"} styles={styles.inputIcon} />
-                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Senha" secureTextEntry />
+                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Senha" secureTextEntry onChangeText={setPassword}  />
             </View>
             <View style={styles.inputContainer}>
                 <Fontisto name={"email"} size={24} color={"#9A9A9A"} styles={styles.inputIcon} />
-                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Email" />
+                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Email" onChangeText={setEmail} />
             </View>
             <View style={styles.inputContainer}>
                 <MaterialCommunityIcons name={"cellphone"} size={24} color={"#9A9A9A"} styles={styles.inputIcon} />
-                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Telefone" />
+                <TextInput style={styles.textInput} placeholderTextColor="#9A9A9A" placeholder="Telefone" onChangeText={setTel} />
             </View>
             <View>
                 <TouchableOpacity style={styles.singInBtnContainer} onPress={handleRegister}>

@@ -13,31 +13,50 @@ const LoginScreen = () => {
     const navigation = useNavigation();
 
     const handleRegister = () => {
-        navigation.navigate("RegisterPet");
-        setStringValue(user);
-        setStringValue(password);
+        if(getData() != null) {
+            navigation.navigate("RegisterPet");
+        } else {
+            createTwoButtonAlert();
+        }
     }
     const handleSign = () => {
         navigation.navigate("Signup");
     }
-
+    const createTwoButtonAlert = () =>
+        Alert.alert('Você não está cadastrado', 'Se cadastre antes de fazer o login', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
+    
     const getData = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('user');
-            return jsonValue != null ? JSON.parse(jsonValue) : null;
+            console.log(JSON.parse(jsonValue));
+            if(jsonValue == null) {
+                return null;
+            } else {
+                jsonValue = await AsyncStorage.getItem('password');
+                if(jsonValue == null) {
+                    return null;
+                } else {
+                    Alert.alert('Login efetuado com sucesso', '', [
+                        {
+                          text: 'Cancel',
+                          onPress: () => console.log('Cancel Pressed'),
+                          style: 'cancel',
+                        },
+                        {text: 'OK', onPress: () => console.log('OK Pressed')},
+                      ]);
+                }
+            }
         } catch (e) {
             // error reading value
         }
     };
-
-    setStringValue = async (value) => {
-        try {
-            await AsyncStorage.setItem('user', value);
-        } catch (e) {
-            // save error
-        }
-
-    }
 
     return (
         <View style={styles.container}>
