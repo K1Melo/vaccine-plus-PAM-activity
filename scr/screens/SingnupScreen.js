@@ -14,19 +14,19 @@ const SingnupScreen = () => {
 
     const handleRegister = () => {
         navigation.navigate("RegisterPet");
-        setStringValue(user);
-        setStringValue(password);
-        setStringValue(email);
-        setStringValue(tel);
+        setStringValue('user', user);
+        setStringValue('password', password);
+        setStringValue('email', email);
+        setStringValue('telefone', tel);
     }
     const handleLogin = () => {
         navigation.navigate("Login");
     }
 
     
-    setStringValue = async (value) => {
+    setStringValue = async (key, value) => {
         try {
-            await AsyncStorage.setItem('user', value);
+            await AsyncStorage.setItem(key, value);
         } catch (e) {
             // save error
         }
