@@ -8,6 +8,10 @@ import RegisterPet from './scr/screens/RegisterPet';
 import AddVaccine from './scr/screens/AddVaccine';
 import ConfirmComponent from './scr/components/ConfirmComponent';
 
+// Integrantes:
+// - Kauã Fernandes Souza de Melo. N° 23082
+// - Mateus Lima Rodrigues da Silva. N° 23353
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
